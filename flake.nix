@@ -23,9 +23,10 @@
             zsh         # Requested shell
           ];
 
-          # Libraries to link against (Boost)
+          # Libraries to link against (Boost, GTest)
           buildInputs = with pkgs; [
             boost
+            gtest
           ];
 
           # Shell hook to verify environment and hint about zsh
@@ -33,9 +34,8 @@
             echo "Welcome to the Clang + Boost development environment!"
             echo "Compiler: $CXX $(${pkgs.clangStdenv.cc}/bin/clang++ --version | head -n 1)"
 
-            # Automatically switch to Zsh
+            # Set SHELL but don't exec, so nix develop --command works
             export SHELL="${pkgs.zsh}/bin/zsh"
-            exec "${pkgs.zsh}/bin/zsh"
           '';
         };
       }
