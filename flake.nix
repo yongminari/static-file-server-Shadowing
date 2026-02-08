@@ -29,13 +29,23 @@
             gtest
           ];
 
+          # Environment variables setup
+          CC = "clang";
+          CXX = "clang++";
+
           # Shell hook to verify environment and hint about zsh
           shellHook = ''
             echo "Welcome to the Clang + Boost development environment!"
             echo "Compiler: $CXX $(${pkgs.clangStdenv.cc}/bin/clang++ --version | head -n 1)"
 
-            # Set SHELL but don't exec, so nix develop --command works
+            # Set SHELL path
             export SHELL="${pkgs.zsh}/bin/zsh"
+
+            # Only switch to Zsh if the session is interactive
+            # This allows 'nix develop --command' to work correctly
+            if [[ $- == *i* ]]; then
+              exec "${pkgs.zsh}/bin/zsh"
+            fi
           '';
         };
       }
