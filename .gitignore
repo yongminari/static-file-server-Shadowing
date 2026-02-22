@@ -1,3 +1,5 @@
 build/**
 Testing/**
 .vscode/**
+.direnv/**
+.cache/**
