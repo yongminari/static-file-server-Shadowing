@@ -50,6 +50,28 @@ TEST(AsioStreambufTest, PrepareAndCommit) {
     EXPECT_EQ(result, "hello");
 }
 
+TEST(AsioStreambufTest, ConsumeManually) {
+    boost::asio::streambuf sbuf;
+    
+    // 1. 11바이트 데이터 쓰기 ("hello world")
+    std::ostream os(&sbuf);
+    os << "hello world";
+    EXPECT_EQ(sbuf.size(), 11);
+    
+    // 2. 앞의 6바이트("hello ")를 수동으로 제거
+    sbuf.consume(6);
+    
+    // 3. 남은 크기가 5바이트인지 확인
+    EXPECT_EQ(sbuf.size(), 5);
+    
+    // 4. 남은 데이터가 "world"인지 확인
+    std::string result;
+    std::istream is(&sbuf);
+    is >> result;
+    EXPECT_EQ(result, "world");
+    EXPECT_EQ(sbuf.size(), 0);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
