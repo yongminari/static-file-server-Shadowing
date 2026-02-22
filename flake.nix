@@ -15,12 +15,11 @@
       {
         # Development environment configuration
         devShells.default = pkgs.mkShell.override { stdenv = pkgs.clangStdenv; } {
-          # Build tools (Clang, CMake, Debugger, Shell)
+          # Build tools (Clang, CMake, Debugger)
           nativeBuildInputs = with pkgs; [
             cmake       # Build system
             gdb         # Debugger
             git         # Version control system
-            zsh         # Requested shell
           ];
 
           # Libraries to link against (Boost, GTest)
@@ -33,16 +32,10 @@
           CC = "clang";
           CXX = "clang++";
 
-          # Shell hook to verify environment and hint about zsh
+          # Shell hook to verify environment
           shellHook = ''
             echo "Welcome to the Clang + Boost development environment!"
             echo "Compiler: $CXX $(${pkgs.clangStdenv.cc}/bin/clang++ --version | head -n 1)"
-
-            # Only switch to Zsh if the session is interactive and the user's shell is zsh
-            if [[ $- == *i* && "$SHELL" == *"zsh"* ]]; then
-              export SHELL="${pkgs.zsh}/bin/zsh"
-              exec "$SHELL"
-            fi
           '';
         };
       }

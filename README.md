@@ -4,7 +4,7 @@
 
 ## 🚀 Nix로 시작하기
 
-이 프로젝트는 **Nix**를 사용하여 모든 개발 환경(Clang, CMake, Boost, GTest, GDB, Zsh)을 일관되게 관리합니다.
+이 프로젝트는 **Nix**를 사용하여 모든 개발 환경(Clang, CMake, Boost, GTest, GDB)을 일관되게 관리합니다.
 
 ### 필수 조건
 
@@ -21,7 +21,6 @@ nix develop
 이 명령어를 실행하면:
 - **Clang**이 기본 컴파일러로 설정됩니다.
 - **Boost** 및 **GTest** 라이브러리가 환경에 추가됩니다.
-- 개발용으로 구성된 **Zsh** 셸이 실행됩니다.
 
 ## 🛠️ 빌드 방법
 
@@ -67,4 +66,3 @@ ctest --output-on-failure
 - **Build System**: CMake
 - **Debugger**: GDB
 - **Libraries**: Boost, GoogleTest
-- **Shell**: Zsh (대화형 셸)
