@@ -20,6 +20,9 @@
             cmake       # Build system
             gdb         # Debugger
             git         # Version control system
+            (writeShellScriptBin "clangd" ''
+              exec ${clang-tools}/bin/clangd --query-driver="/nix/store/*-clang-wrapper-*/bin/clang++" "$@"
+            '')
           ];
 
           # Libraries to link against (Boost, GTest)

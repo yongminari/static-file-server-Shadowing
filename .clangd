@@ -1,4 +1,2 @@
 CompileFlags:
   CompilationDatabase: build
-  QueryDriver:
-    - /nix/store/*-clang-wrapper-*/bin/clang++
