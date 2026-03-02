@@ -1,3 +1,4 @@
+#include <boost/asio/buffer.hpp>
 #include <gtest/gtest.h>
 #include <boost/asio/streambuf.hpp>
 #include <iostream>
@@ -74,6 +75,41 @@ TEST(AsioStreambufTest, ConsumeManually) {
 
 TEST(AsioStreambufTest, PrepareTest) {
     boost::asio::streambuf sbuf;
+    auto buf = sbuf.prepare(10);
+    EXPECT_EQ(10, boost::asio::buffer_size(buf));
+}
+
+TEST(AsioStreambufTest, CommitTest) {
+    boost::asio::streambuf sbuf;
+    std::string test_str("TestCommit");
+    auto buf = sbuf.prepare(20);
+
+    std::istream is(&sbuf);
+    
+    std::string result;
+    boost::asio::buffer_copy(buf, boost::asio::buffer(test_str));
+
+    // get stream data without committing
+    is >> result;
+    EXPECT_NE(test_str, result);
+    EXPECT_EQ(0, result.size());
+
+    // clear error bit
+    is.clear();
+
+    // get stream data with commiting
+    sbuf.commit(test_str.size());
+    is >> result;
+    EXPECT_EQ(test_str, result);
+    EXPECT_EQ(test_str.size(), result.size());
+
+    // why is the sbuf 0?
+    EXPECT_EQ(0, sbuf.size());
+
+    // TODO: then I'll test with space inserted string
+    
+    // TODO: Test with istream::read function, too.
+
 }
 
 int main(int argc, char **argv) {
