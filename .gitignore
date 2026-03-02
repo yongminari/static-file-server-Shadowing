@@ -3,3 +3,4 @@ Testing/**
 .vscode/**
 .direnv/**
 .cache/**
+compile_commands.json
